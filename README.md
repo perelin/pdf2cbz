@@ -10,17 +10,59 @@ A simple command-line tool to convert PDF comic files to CBZ format.
 
 ## Installation
 
-1. Clone the repository
-2. Build the application:
+### Local Development Installation
+
+1. Clone the repository:
 
 ```bash
-go build -o pdf2cbz cmd/main.go
+git clone https://github.com/perelin/pdf2cbz.git
+cd pdf2cbz
+```
+
+2. Install the application locally:
+
+```bash
+go install ./cmd
+```
+
+This will install the binary in your `$GOPATH/bin` directory, making it available system-wide.
+
+### Remote Installation
+
+To install directly from the GitHub repository:
+
+```bash
+# Install latest version
+go install github.com/perelin/pdf2cbz/cmd/pdf2cbz@latest
+
+# Install specific version
+go install github.com/perelin/pdf2cbz/cmd/pdf2cbz@v1.0.0
+```
+
+This will download and install the specified version of the application.
+
+### Versioning
+
+The project uses semantic versioning (MAJOR.MINOR.PATCH). To install a specific version:
+
+```bash
+# Install version 1.0.0
+go install github.com/perelin/pdf2cbz/cmd/pdf2cbz@v1.0.0
+
+# Install version 1.1.0
+go install github.com/perelin/pdf2cbz/cmd/pdf2cbz@v1.1.0
+```
+
+To list available versions:
+
+```bash
+go list -m -versions github.com/perelin/pdf2cbz
 ```
 
 ## Usage
 
 ```bash
-./pdf2cbz <pdf-file>
+pdf2cbz <pdf-file>
 ```
 
 The tool will:
@@ -34,7 +76,7 @@ The output CBZ file will be created in the same directory as the input PDF file,
 ## Example
 
 ```bash
-./pdf2cbz mycomic.pdf
+pdf2cbz mycomic.pdf
 # Creates mycomic.cbz in the same directory
 ```
 
