@@ -18,7 +18,9 @@ func ConvertPDFToCBZ(pdfPath string) error {
 	}
 
 	// Create temporary directory in the same directory as the input file
-	tempDir := filepath.Join(filepath.Dir(pdfPath), tempDirName)
+	pdfBaseName := filepath.Base(pdfPath)
+	pdfNameWithoutExt := strings.TrimSuffix(pdfBaseName, filepath.Ext(pdfBaseName))
+	tempDir := filepath.Join(filepath.Dir(pdfPath), tempDirName+"_"+pdfNameWithoutExt)
 	if err := os.MkdirAll(tempDir, 0755); err != nil {
 		return fmt.Errorf("createTempDir: %w", err)
 	}
@@ -61,12 +63,20 @@ func validatePDF(pdfPath string) error {
 }
 
 func extractImages(pdfPath, tempDir string) error {
-	cmd := exec.Command("pdftoppm",
+	args := []string{
 		"-jpeg", "-jpegopt", "quality=90",
 		"-f", "1",
+		"-r", "300", // Set a fixed resolution of 300 DPI
+		"-scale-dimension-before-rotation", // Ensure consistent scaling
 		"-progress",
 		pdfPath,
-		filepath.Join(tempDir, "page"))
+		filepath.Join(tempDir, "page"),
+	}
+
+	cmd := exec.Command("pdftoppm", args...)
+
+	// Print the full command for debugging
+	fmt.Printf("Running command: pdftoppm %s\n", strings.Join(args, " "))
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
