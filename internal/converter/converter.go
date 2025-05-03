@@ -60,11 +60,6 @@ func validatePDF(pdfPath string) error {
 	return nil
 }
 
-func getBaseFilename(path string) string {
-	base := filepath.Base(path)
-	return strings.TrimSuffix(base, filepath.Ext(base))
-}
-
 func extractImages(pdfPath, tempDir string) error {
 	cmd := exec.Command("pdftoppm",
 		"-png",
@@ -84,8 +79,8 @@ func extractImages(pdfPath, tempDir string) error {
 }
 
 func createCBZ(tempDir, cbzPath string) error {
-	// Create a zip file of the temporary directory
-	cmd := exec.Command("zip", "-r", cbzPath, tempDir)
+	// Create a zip file containing only the page files
+	cmd := exec.Command("zip", "-j", cbzPath, filepath.Join(tempDir, "page-*.png"))
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
