@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"pdf2cbz/internal/converter"
+	"github.com/perelin/pdf2cbz/internal/converter"
 )
 
 func main() {
