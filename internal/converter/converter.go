@@ -62,7 +62,7 @@ func validatePDF(pdfPath string) error {
 
 func extractImages(pdfPath, tempDir string) error {
 	cmd := exec.Command("pdftoppm",
-		"-png",
+		"-jpeg", "-jpegopt", "quality=90",
 		"-f", "1",
 		"-progress",
 		pdfPath,
@@ -79,8 +79,18 @@ func extractImages(pdfPath, tempDir string) error {
 }
 
 func createCBZ(tempDir, cbzPath string) error {
-	// Create a zip file containing only the page files
-	cmd := exec.Command("zip", "-j", cbzPath, filepath.Join(tempDir, "page-*.png"))
+	// Find all page files
+	matches, err := filepath.Glob(filepath.Join(tempDir, "page-*.jpg"))
+	if err != nil {
+		return fmt.Errorf("failed to find page files: %w", err)
+	}
+	if len(matches) == 0 {
+		return fmt.Errorf("no page files found in %s", tempDir)
+	}
+
+	// Create zip command with all matching files
+	args := append([]string{"-j", cbzPath}, matches...)
+	cmd := exec.Command("zip", args...)
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
