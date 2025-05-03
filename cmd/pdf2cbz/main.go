@@ -1,4 +1,4 @@
-package pdf2cbz
+package main
 
 import (
 	"fmt"
