@@ -22,7 +22,7 @@ cd pdf2cbz
 2. Install the application locally:
 
 ```bash
-go install ./cmd
+go install ./cmd/pdf2cbz
 ```
 
 This will install the binary in your `$GOPATH/bin` directory, making it available system-wide.
