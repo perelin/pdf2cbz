@@ -35,29 +35,9 @@ To install directly from the GitHub repository:
 # Install latest version
 go install github.com/perelin/pdf2cbz/cmd/pdf2cbz@latest
 
-# Install specific version
-go install github.com/perelin/pdf2cbz/cmd/pdf2cbz@v1.0.0
 ```
 
 This will download and install the specified version of the application.
-
-### Versioning
-
-The project uses semantic versioning (MAJOR.MINOR.PATCH). To install a specific version:
-
-```bash
-# Install version 1.0.0
-go install github.com/perelin/pdf2cbz/cmd/pdf2cbz@v1.0.0
-
-# Install version 1.1.0
-go install github.com/perelin/pdf2cbz/cmd/pdf2cbz@v1.1.0
-```
-
-To list available versions:
-
-```bash
-go list -m -versions github.com/perelin/pdf2cbz
-```
 
 ## Usage
 
@@ -67,7 +47,7 @@ pdf2cbz <pdf-file>
 
 The tool will:
 
-1. Extract all pages from the PDF as PNG images
+1. Extract all pages from the PDF as images
 2. Create a CBZ archive containing the images
 3. Clean up temporary files
 
@@ -79,14 +59,6 @@ The output CBZ file will be created in the same directory as the input PDF file,
 pdf2cbz mycomic.pdf
 # Creates mycomic.cbz in the same directory
 ```
-
-## Error Handling
-
-The tool provides clear error messages including:
-
-- Function name where the error occurred
-- Input filename
-- Specific error details
 
 ## Notes
 
